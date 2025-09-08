@@ -18,7 +18,7 @@ public class ParkingLot {
     public ParkingTicket park(Car car) {
         if (cars.contains(car)) return null;
 
-        if (cars.size() >= capacity) {
+        if (isFull()) {
             System.out.print("No available position.");
             return null;
         }
@@ -29,6 +29,10 @@ public class ParkingLot {
         cars.add(car);
         occupiedPositions.add(position);
         return parkingTicket;
+    }
+
+    public boolean isFull() {
+        return cars.size() >= capacity;
     }
 
     private Integer findNextAvailablePosition() {
