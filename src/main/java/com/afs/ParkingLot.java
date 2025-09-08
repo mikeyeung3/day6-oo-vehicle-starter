@@ -16,14 +16,13 @@ public class ParkingLot {
     }
 
     public ParkingTicket park(Car car) {
-        if (cars.contains(car) || cars.size() >= capacity) {
-            return null;
-        }
+        if (cars.contains(car)) return null;
 
-        Integer position = findNextAvailablePosition();
-        if (position == null) {
+        if (cars.size() >= capacity) {
+            System.out.print("No available position.");
             return null;
         }
+        Integer position = findNextAvailablePosition();
 
         ParkingTicket parkingTicket = new ParkingTicket(car, position, this);
         parkingMap.put(parkingTicket, car);
