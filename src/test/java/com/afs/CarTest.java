@@ -134,6 +134,17 @@ public class CarTest {
     }
 
     // Case 3 - Given a parking lot with two parked cars, a standard parking boy, and two parking tickets, When fetch the car twice, Then return the right car with each ticket
+    @Test
+    void should_return_right_car_with_each_ticket_when_fetch_twice_given_parking_lot_with_two_parked_cars_standard_parking_soy_and_two_parking_tickets() {
+        ParkingLot parkingLot = new ParkingLot(10);
+        StandardParkingBoy parkingBoy = new StandardParkingBoy(parkingLot);
+        Car car1 = new Car("ABC-123");
+        Car car2 = new Car("DEF-456");
+        ParkingTicket parkingTicket1 = parkingBoy.park(car1);
+        ParkingTicket parkingTicket2 = parkingBoy.park(car2);
+        assertEquals(car1, parkingBoy.fetch(parkingTicket1));
+        assertEquals(car2, parkingBoy.fetch(parkingTicket2));
+    }
     // Case 4 - Given a parking lot, a standard parking boy, and a wrong parking ticket, When fetch the car. Then return nothing with error message "Unrecognized parking ticket.”
     // Case 5 - Given a parking lot, a standard parking boy, and a used parking ticket, When fetch the car. Then return nothing with error message "Unrecognized parking ticket."
     // Case 6 - Given a parking lot without any position, a standard parking boy, and a car, When park the car, Then return nothing with error message "No available position."
