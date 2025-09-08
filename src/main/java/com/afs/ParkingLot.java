@@ -23,4 +23,14 @@ public class ParkingLot {
         cars.add(car);
         return parkingTicket;
     }
+
+    public Car fetch(ParkingTicket parkingTicket) {
+        if (parkingMap.containsKey(parkingTicket)) {
+            Car car = parkingMap.get(parkingTicket);
+            parkingMap.remove(parkingTicket);
+            cars.remove(car);
+            return car;
+        }
+        return null;
+    }
 }
