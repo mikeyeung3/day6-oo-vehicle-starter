@@ -57,4 +57,14 @@ public class CarTest {
         assertNull(fetchedCarAgain);
     }
     //  Case 6 - Given a parking lot without any position, and a car, When park the car, Then return nothing
+    @Test
+    void should_return_nothing_when_park_given_parking_lot_without_any_position_and_car() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        for (int i = 0; i < 10; i++) {
+            parkingLot.park(new Car("CAR-" + i));
+        }
+        Car car = new Car("ABC-123");
+        ParkingTicket parkingTicket = parkingLot.park(car);
+        assertNull(parkingTicket);
+    }
 }
