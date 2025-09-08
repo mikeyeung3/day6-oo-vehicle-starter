@@ -1,11 +1,21 @@
 package com.afs;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import java.io.ByteArrayOutputStream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CarTest {
+
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+    @BeforeEach
+    void setUp() {
+        System.setOut(new java.io.PrintStream(outputStream));
+    }
+
     // Case 1 - Given a parking lot, and a car, When park the car, Then return a parking ticket.
     @Test
     void should_return_parking_ticket_when_park_given_parking_lot_and_car() {
@@ -67,4 +77,18 @@ public class CarTest {
         ParkingTicket parkingTicket = parkingLot.park(car);
         assertNull(parkingTicket);
     }
+
+    // Case 1 - Given a parking lot, and an unrecognized ticket, When fetch the car, Then return nothing with error message "Unrecognized parking ticket."
+    @Test
+    void should_return_nothing_with_error_message_when_fetch_given_parking_lot_and_unrecognized_ticket() {
+        ParkingLot parkingLot = new ParkingLot(10);
+        Car car = new Car("ABC-123");
+        parkingLot.park(car);
+        ParkingTicket unrecognizedTicket = new ParkingTicket(new Car("XYZ-789"), 99, parkingLot);
+        Car fetchedCar = parkingLot.fetch(unrecognizedTicket);
+        assertNull(fetchedCar);
+        assertEquals("Unrecognized parking ticket.", outputStream.toString());
+    }
+// Case 2 - Given a parking lot, and a used ticket, When fetch the car, Then return nothing with error message "Unrecognized parking ticket."
+// Case 3 - Given a parking lot without any position, and a car, When park the car, Then return nothing with error message "No available position."
 }

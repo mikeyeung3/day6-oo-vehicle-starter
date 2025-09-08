@@ -48,6 +48,7 @@ public class ParkingLot {
             occupiedPositions.remove(parkingTicket.position());
             return car;
         }
+        System.out.print("Unrecognized parking ticket.");
         return null;
     }
 }
