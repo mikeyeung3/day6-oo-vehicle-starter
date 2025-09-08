@@ -1,17 +1,31 @@
 package com.afs;
 
-public class StandardParkingBoy {
-    private final ParkingLot parkingLot;
+import java.util.List;
 
-    public StandardParkingBoy(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
+public class StandardParkingBoy {
+    private final List<ParkingLot> parkingLots;
+
+    public StandardParkingBoy(List<ParkingLot> parkingLots) {
+        this.parkingLots = parkingLots;
     }
 
     public ParkingTicket park(Car car) {
-        return parkingLot.park(car);
+        for (ParkingLot parkingLot : parkingLots) {
+            if (!parkingLot.isFull()) {
+                return parkingLot.park(car);
+            }
+        }
+        System.out.print("No available position.");
+        return null;
     }
 
     public Car fetch(ParkingTicket parkingTicket) {
-        return parkingLot.fetch(parkingTicket);
+        for (ParkingLot parkingLot : parkingLots) {
+            if (parkingLot.equals(parkingTicket.parkingLot())) {
+                return parkingLot.fetch(parkingTicket);
+            }
+        }
+        System.out.print("Unrecognized parking ticket.");
+        return null;
     }
 }

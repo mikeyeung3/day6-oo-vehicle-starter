@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -119,7 +121,7 @@ public class CarTest {
     @Test
     void should_return_parking_ticket_when_park_given_parking_lot_standard_parking_boy_and_car() {
         ParkingLot parkingLot = new ParkingLot(10);
-        StandardParkingBoy parkingBoy = new StandardParkingBoy(parkingLot);
+        StandardParkingBoy parkingBoy = new StandardParkingBoy(new ArrayList<>(List.of(parkingLot)));
         Car car = new Car("ABC-123");
         assertNotNull(parkingBoy.park(car));
     }
@@ -127,7 +129,7 @@ public class CarTest {
     @Test
     void should_return_parked_car_when_fetch_given_parking_lot_with_parked_car_standard_parking_boy_and_parking_ticket() {
         ParkingLot parkingLot = new ParkingLot(10);
-        StandardParkingBoy parkingBoy = new StandardParkingBoy(parkingLot);
+        StandardParkingBoy parkingBoy = new StandardParkingBoy(new ArrayList<>(List.of(parkingLot)));
         Car car = new Car("ABC-123");
         ParkingTicket parkingTicket = parkingBoy.park(car);
         assertNotNull(parkingBoy.fetch(parkingTicket));
@@ -137,7 +139,7 @@ public class CarTest {
     @Test
     void should_return_right_car_with_each_ticket_when_fetch_twice_given_parking_lot_with_two_parked_cars_standard_parking_soy_and_two_parking_tickets() {
         ParkingLot parkingLot = new ParkingLot(10);
-        StandardParkingBoy parkingBoy = new StandardParkingBoy(parkingLot);
+        StandardParkingBoy parkingBoy = new StandardParkingBoy(new ArrayList<>(List.of(parkingLot)));
         Car car1 = new Car("ABC-123");
         Car car2 = new Car("DEF-456");
         ParkingTicket parkingTicket1 = parkingBoy.park(car1);
@@ -149,7 +151,7 @@ public class CarTest {
     @Test
     void should_return_nothing_with_error_message_when_fetch_given_parking_lot_standard_parking_boy_and_wrong_parking_ticket() {
         ParkingLot parkingLot = new ParkingLot(10);
-        StandardParkingBoy parkingBoy = new StandardParkingBoy(parkingLot);
+        StandardParkingBoy parkingBoy = new StandardParkingBoy(new ArrayList<>(List.of(parkingLot)));
         Car car = new Car("ABC-123");
         parkingBoy.park(car);
         ParkingTicket wrongTicket = new ParkingTicket(new Car("XYZ-789"), 99, parkingLot);
@@ -161,7 +163,7 @@ public class CarTest {
     @Test
     void should_return_nothing_with_error_message_when_fetch_given_parking_lot_standard_parking_boy_and_used_parking_ticket() {
         ParkingLot parkingLot = new ParkingLot(10);
-        StandardParkingBoy parkingBoy = new StandardParkingBoy(parkingLot);
+        StandardParkingBoy parkingBoy = new StandardParkingBoy(new ArrayList<>(List.of(parkingLot)));
         Car car = new Car("ABC-123");
         ParkingTicket parkingTicket = parkingBoy.park(car);
         parkingBoy.fetch(parkingTicket);
@@ -173,7 +175,7 @@ public class CarTest {
     @Test
     void should_return_nothing_with_error_message_when_park_given_parking_lot_without_any_position_standard_parking_boy_and_car() {
         ParkingLot parkingLot = new ParkingLot(10);
-        StandardParkingBoy parkingBoy = new StandardParkingBoy(parkingLot);
+        StandardParkingBoy parkingBoy = new StandardParkingBoy(new ArrayList<>(List.of(parkingLot)));
         for (int i = 0; i < 10; i++) {
             parkingBoy.park(new Car("CAR-" + i));
         }
@@ -182,4 +184,23 @@ public class CarTest {
         assertNull(parkingTicket);
         assertEquals("No available position.", outputStream.toString());
     }
+
+    // Story
+    // Case 1 - Given a standard parking boy, who manage two parking lots, both with available position, and a car, When park the car, Then the car will be parked to the first parking lot
+    @Test
+    void should_park_to_first_parking_lot_when_park_given_standard_parking_boy_manage_two_parking_lots_both_with_available_position_and_car() {
+        ParkingLot parkingLot1 = new ParkingLot(10);
+        ParkingLot parkingLot2 = new ParkingLot(10);
+        StandardParkingBoy parkingBoy = new StandardParkingBoy(new ArrayList<>(List.of(parkingLot1, parkingLot2)));
+        Car car = new Car("ABC-123");
+        ParkingTicket parkingTicket = parkingBoy.park(car);
+        assertNotNull(parkingTicket);
+        assertEquals(parkingLot1, parkingTicket.parkingLot());
+    }
+    // Case 2 - Given a standard parking boy, who manage two parking lots, first is full and second with available position, and a car, When park the car, Then the car will be parked to the second parking lot
+//Case 3 - Given a standard parking boy, who manage two parking lots, both with a parked car, and two parking ticket, When fetch the car twice, Then return the right car with each ticket
+//Case 4 - Given a standard parking boy, who manage two parking lots, and an unrecognized ticket, When fetch the car, Then return nothing with error message "Unrecognized parking ticket.”
+//Case 5 - Given a standard parking boy, who manage two parking lots, and a used ticket, When fetch the car, Then return nothing with error message "Unrecognized parking ticket."
+//Case 6 - Given a standard parking boy, who manage two parking lots, both without any position, and a car, When park the car, Then return nothing with error message "No available position."
+
 }
