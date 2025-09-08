@@ -89,6 +89,16 @@ public class CarTest {
         assertNull(fetchedCar);
         assertEquals("Unrecognized parking ticket.", outputStream.toString());
     }
-// Case 2 - Given a parking lot, and a used ticket, When fetch the car, Then return nothing with error message "Unrecognized parking ticket."
+    // Case 2 - Given a parking lot, and a used ticket, When fetch the car, Then return nothing with error message "Unrecognized parking ticket."
+    @Test
+    void should_return_nothing_with_error_message_when_fetch_given_parking_lot_and_used_ticket() {
+        ParkingLot parkingLot = new ParkingLot(10);
+        Car car = new Car("ABC-123");
+        ParkingTicket parkingTicket = parkingLot.park(car);
+        parkingLot.fetch(parkingTicket);
+        Car fetchedCarAgain = parkingLot.fetch(parkingTicket);
+        assertNull(fetchedCarAgain);
+        assertEquals("Unrecognized parking ticket.", outputStream.toString());
+    }
 // Case 3 - Given a parking lot without any position, and a car, When park the car, Then return nothing with error message "No available position."
 }
