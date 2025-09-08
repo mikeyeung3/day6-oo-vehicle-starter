@@ -23,6 +23,18 @@ public class CarTest {
         assertNotNull(fetchedCar);
     }
     //  Case 3 - Given a parking lot with two parked cars, and two parking tickets, When fetch the car twice, Then return the right car with each ticket
+    @Test
+    void should_return_right_car_with_each_ticket_when_fetch_twice_given_parking_lot_with_two_parked_cars_and_two_parking_tickets() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        Car car1 = new Car("ABC-123");
+        Car car2 = new Car("DEF-456");
+        ParkingTicket parkingTicket1 = parkingLot.park(car1);
+        ParkingTicket parkingTicket2 = parkingLot.park(car2);
+        Car fetchedCar1 = parkingLot.fetch(parkingTicket1);
+        Car fetchedCar2 = parkingLot.fetch(parkingTicket2);
+        assertNotNull(fetchedCar1);
+        assertNotNull(fetchedCar2);
+    }
     //  Case 4 - Given a parking lot, and a wrong parking ticket, When fetch the car, Then return nothing.
     //  Case 5 - Given a parking lot, and a used parking ticket, When fetch the car, Then return nothing.
     //  Case 6 - Given a parking lot without any position, and a car, When park the car, Then return nothing
