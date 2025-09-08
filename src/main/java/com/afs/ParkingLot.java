@@ -6,14 +6,13 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 public class ParkingLot {
-    private final Integer id;
     private final HashMap<ParkingTicket, Car> parkingMap = new HashMap<>();
     private final Set<Car> cars = new HashSet<>();
     private final Set<Integer> occupiedPositions = new HashSet<>();
-    private static final Integer capacity = 10;
+    private final Integer capacity;
 
-    public ParkingLot(int id) {
-        this.id = id;
+    public ParkingLot(Integer capacity) {
+        this.capacity = capacity;
     }
 
     public ParkingTicket park(Car car) {
