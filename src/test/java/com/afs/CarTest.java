@@ -198,6 +198,17 @@ public class CarTest {
         assertEquals(parkingLot1, parkingTicket.parkingLot());
     }
     // Case 2 - Given a standard parking boy, who manage two parking lots, first is full and second with available position, and a car, When park the car, Then the car will be parked to the second parking lot
+    @Test
+    void should_park_to_second_parking_lot_when_park_given_standard_parking_boy_manage_two_parking_lots_first_is_full_and_second_with_available_position_and_car() {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(10);
+        StandardParkingBoy parkingBoy = new StandardParkingBoy(new ArrayList<>(List.of(parkingLot1, parkingLot2)));
+        parkingLot1.park(new Car("CAR-1"));
+        Car car = new Car("ABC-123");
+        ParkingTicket parkingTicket = parkingBoy.park(car);
+        assertNotNull(parkingTicket);
+        assertEquals(parkingLot2, parkingTicket.parkingLot());
+    }
 //Case 3 - Given a standard parking boy, who manage two parking lots, both with a parked car, and two parking ticket, When fetch the car twice, Then return the right car with each ticket
 //Case 4 - Given a standard parking boy, who manage two parking lots, and an unrecognized ticket, When fetch the car, Then return nothing with error message "Unrecognized parking ticket.”
 //Case 5 - Given a standard parking boy, who manage two parking lots, and a used ticket, When fetch the car, Then return nothing with error message "Unrecognized parking ticket."
