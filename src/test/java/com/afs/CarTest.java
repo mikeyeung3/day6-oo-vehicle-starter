@@ -124,7 +124,14 @@ public class CarTest {
         assertNotNull(parkingBoy.park(car));
     }
     // Case 2 - Given a parking lot with a parked car, a standard parking boy, and a parking ticket, When fetch the car, Then return the parked car.
-
+    @Test
+    void should_return_parked_car_when_fetch_given_parking_lot_with_parked_car_standard_parking_boy_and_parking_ticket() {
+        ParkingLot parkingLot = new ParkingLot(10);
+        StandardParkingBoy parkingBoy = new StandardParkingBoy(parkingLot);
+        Car car = new Car("ABC-123");
+        ParkingTicket parkingTicket = parkingBoy.park(car);
+        assertNotNull(parkingBoy.fetch(parkingTicket));
+    }
 
     // Case 3 - Given a parking lot with two parked cars, a standard parking boy, and two parking tickets, When fetch the car twice, Then return the right car with each ticket
     // Case 4 - Given a parking lot, a standard parking boy, and a wrong parking ticket, When fetch the car. Then return nothing with error message "Unrecognized parking ticket.”
