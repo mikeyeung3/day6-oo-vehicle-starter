@@ -47,5 +47,14 @@ public class CarTest {
         assertNull(fetchedCar);
     }
     //  Case 5 - Given a parking lot, and a used parking ticket, When fetch the car, Then return nothing.
+    @Test
+    void should_return_nothing_when_fetch_given_parking_lot_and_used_parking_ticket() {
+        ParkingLot parkingLot = new ParkingLot(1);
+        Car car = new Car("ABC-123");
+        ParkingTicket parkingTicket = parkingLot.park(car);
+        parkingLot.fetch(parkingTicket);
+        Car fetchedCarAgain = parkingLot.fetch(parkingTicket);
+        assertNull(fetchedCarAgain);
+    }
     //  Case 6 - Given a parking lot without any position, and a car, When park the car, Then return nothing
 }
